@@ -1,0 +1,876 @@
+<!DOCTYPE html>
+<html lang="fr" dir="ltr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mes Premiers Mots en Arabe + Coran</title>
+<link href="https://fonts.googleapis.com/css2?family=Amiri:ital,wght@0,400;0,700;1,400&family=Playfair+Display:wght@400;700;900&family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --gold: #C9A84C;
+  --gold2: #e8c878;
+  --dark: #0d0900;
+  --cream: #fdf6e3;
+  --bg: #0a0700;
+  --card: #130e04;
+  --card2: #1a1408;
+  --border: #2e2208;
+  --green: #2d5a27;
+  --teal: #1a4a3a;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  font-family: 'Lato', sans-serif;
+  background: var(--bg);
+  color: var(--cream);
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+body::before {
+  content: '';
+  position: fixed; inset: 0;
+  background:
+    radial-gradient(ellipse at 15% 10%, rgba(201,168,76,0.07) 0%, transparent 45%),
+    radial-gradient(ellipse at 85% 90%, rgba(26,74,58,0.08) 0%, transparent 45%),
+    radial-gradient(ellipse at 50% 50%, rgba(201,168,76,0.03) 0%, transparent 70%);
+  pointer-events: none; z-index: 0;
+}
+
+.wrap { max-width: 960px; margin: 0 auto; padding: 16px 16px 60px; position: relative; z-index: 1; }
+
+/* ── HEADER ── */
+header {
+  text-align: center;
+  padding: 36px 20px 28px;
+  border-bottom: 1px solid var(--border);
+  margin-bottom: 26px;
+  position: relative;
+}
+header::after {
+  content: '☽';
+  position: absolute; top: 14px; right: 24px;
+  font-size: 1.6rem; color: rgba(201,168,76,0.25);
+}
+.hdr-ar {
+  font-family: 'Amiri', serif;
+  font-size: 2.6rem; color: var(--gold);
+  direction: rtl; line-height: 1.3;
+  text-shadow: 0 0 50px rgba(201,168,76,0.25);
+}
+.hdr-fr {
+  font-family: 'Playfair Display', serif;
+  font-size: 0.8rem; color: rgba(253,246,227,0.45);
+  letter-spacing: 0.22em; text-transform: uppercase; margin-top: 6px;
+}
+
+/* ── NAV ── */
+.nav {
+  display: flex; gap: 6px; flex-wrap: wrap;
+  justify-content: center; margin-bottom: 26px;
+}
+.nav-btn {
+  background: var(--card); border: 1px solid var(--border);
+  color: rgba(253,246,227,0.55); padding: 8px 15px;
+  border-radius: 4px; cursor: pointer;
+  font-family: 'Lato', sans-serif; font-size: 0.8rem;
+  letter-spacing: 0.06em; text-transform: uppercase; transition: all 0.2s;
+}
+.nav-btn:hover { border-color: var(--gold); color: var(--gold); }
+.nav-btn.active { background: var(--gold); border-color: var(--gold); color: var(--dark); font-weight: 700; }
+
+/* ── SECTIONS ── */
+.section { display: none; animation: fadeUp 0.35s ease; }
+.section.active { display: block; }
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(12px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.sec-title {
+  font-family: 'Playfair Display', serif; font-size: 1.3rem;
+  color: var(--gold); margin-bottom: 18px; padding-bottom: 10px;
+  border-bottom: 1px solid var(--border);
+  display: flex; align-items: center; gap: 10px;
+}
+.sec-title::before {
+  content: ''; display: inline-block; width: 3px; height: 1.2rem;
+  background: var(--gold); border-radius: 2px; flex-shrink: 0;
+}
+
+/* ── CATEGORY PILLS ── */
+.cats {
+  display: flex; gap: 7px; flex-wrap: wrap; margin-bottom: 18px;
+}
+.cat-pill {
+  background: var(--card); border: 1px solid var(--border);
+  color: rgba(253,246,227,0.55); padding: 5px 13px;
+  border-radius: 20px; cursor: pointer; font-size: 0.78rem; transition: all 0.2s;
+}
+.cat-pill.active, .cat-pill:hover {
+  border-color: var(--gold); color: var(--gold); background: rgba(201,168,76,0.1);
+}
+
+/* ── VOCAB GRID ── */
+.vocab-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+  gap: 12px;
+}
+.v-card {
+  background: var(--card2); border: 1px solid var(--border);
+  border-radius: 8px; padding: 18px 14px; text-align: center;
+  transition: all 0.22s; cursor: default;
+}
+.v-card:hover {
+  border-color: rgba(201,168,76,0.5);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(201,168,76,0.12);
+}
+.v-ar { font-family: 'Amiri', serif; font-size: 1.9rem; color: var(--gold); direction: rtl; display: block; margin-bottom: 8px; line-height: 1.4; }
+.v-fr { font-size: 0.82rem; color: rgba(253,246,227,0.65); text-transform: uppercase; font-weight: 700; letter-spacing: 0.04em; }
+.v-tr { font-size: 0.72rem; color: rgba(201,168,76,0.55); margin-top: 3px; font-style: italic; }
+
+/* ── FLASHCARD ── */
+.fc-wrap { max-width: 460px; margin: 0 auto 24px; perspective: 1000px; cursor: pointer; }
+.flashcard {
+  width: 100%; height: 210px; position: relative;
+  transform-style: preserve-3d;
+  transition: transform 0.55s cubic-bezier(0.4,0,0.2,1);
+  border-radius: 10px;
+}
+.flashcard.flipped { transform: rotateY(180deg); }
+.fc-face {
+  position: absolute; inset: 0; backface-visibility: hidden;
+  border-radius: 10px; display: flex; flex-direction: column;
+  align-items: center; justify-content: center; padding: 28px;
+  border: 1px solid var(--border);
+}
+.fc-front { background: linear-gradient(135deg, #1a1206, #231800); }
+.fc-back  { background: linear-gradient(135deg, #0b1a10, #122018); transform: rotateY(180deg); border-color: rgba(45,90,39,0.5); }
+.fc-lbl   { font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.14em; color: rgba(253,246,227,0.28); margin-bottom: 14px; }
+.fc-ar    { font-family: 'Amiri', serif; font-size: 3.2rem; color: var(--gold); direction: rtl; text-shadow: 0 0 24px rgba(201,168,76,0.35); }
+.fc-fr    { font-size: 1.4rem; color: #7dd874; font-family: 'Playfair Display', serif; }
+.fc-hint  { font-size: 0.72rem; color: rgba(253,246,227,0.25); margin-top: 8px; }
+.fc-nav   { display: flex; gap: 10px; justify-content: center; align-items: center; }
+.btn-ol   { background: transparent; border: 1px solid var(--border); color: var(--cream); padding: 9px 18px; border-radius: 5px; cursor: pointer; font-size: 0.82rem; font-family: 'Lato', sans-serif; transition: all 0.2s; }
+.btn-ol:hover { border-color: var(--gold); color: var(--gold); }
+.fc-cnt   { color: rgba(253,246,227,0.35); font-size: 0.82rem; min-width: 55px; text-align: center; }
+
+/* ── QUIZ ── */
+.quiz-box {
+  background: var(--card2); border: 1px solid var(--border);
+  border-radius: 12px; padding: 36px 28px; text-align: center;
+  max-width: 580px; margin: 0 auto;
+}
+.q-score  { font-size: 0.85rem; color: rgba(253,246,227,0.45); margin-bottom: 20px; }
+.q-num    { color: var(--gold); font-weight: 700; font-size: 1.05rem; }
+.q-word   { font-family: 'Amiri', serif; font-size: 3.8rem; color: var(--gold); direction: rtl; min-height: 76px; text-shadow: 0 0 28px rgba(201,168,76,0.35); margin-bottom: 6px; }
+.q-hint   { font-size: 0.75rem; color: rgba(253,246,227,0.35); text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 24px; }
+.q-opts   { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 18px; }
+.q-opt    {
+  background: rgba(253,246,227,0.04); border: 1px solid var(--border);
+  color: var(--cream); padding: 13px 10px; border-radius: 6px; cursor: pointer;
+  font-size: 0.9rem; font-family: 'Lato', sans-serif; transition: all 0.18s; line-height: 1.3;
+}
+.q-opt:hover:not(:disabled) { border-color: var(--gold); background: rgba(201,168,76,0.1); }
+.q-opt.correct { background: rgba(45,90,39,0.4); border-color: #4a9e42; color: #7dd874; }
+.q-opt.wrong   { background: rgba(150,30,30,0.4); border-color: #9e4242; color: #e87a7a; }
+.q-opt:disabled { cursor: default; }
+.q-fb  { font-size: 0.95rem; margin: 14px 0; min-height: 22px; font-weight: 700; letter-spacing: 0.04em; }
+.q-fb.ok  { color: #7dd874; }
+.q-fb.err { color: #e87a7a; }
+
+.btn {
+  background: var(--gold); color: var(--dark);
+  border: none; padding: 11px 26px; border-radius: 5px; cursor: pointer;
+  font-weight: 700; font-family: 'Lato', sans-serif; font-size: 0.88rem;
+  letter-spacing: 0.05em; text-transform: uppercase; transition: all 0.2s;
+}
+.btn:hover { background: var(--gold2); transform: translateY(-1px); }
+
+/* ── TIP BOX ── */
+.tip {
+  background: rgba(201,168,76,0.07); border: 1px solid rgba(201,168,76,0.2);
+  border-radius: 7px; padding: 13px 17px; margin-bottom: 20px;
+  font-size: 0.82rem; color: rgba(253,246,227,0.65); line-height: 1.65;
+}
+.tip strong { color: var(--gold); }
+
+/* ════════════════════════════════
+   CORAN SECTION
+════════════════════════════════ */
+.sourate-list { display: flex; flex-direction: column; gap: 20px; }
+
+.sourate-card {
+  background: var(--card2); border: 1px solid var(--border);
+  border-radius: 10px; overflow: hidden;
+  transition: border-color 0.2s;
+}
+.sourate-card:hover { border-color: rgba(201,168,76,0.4); }
+
+.sourate-header {
+  display: flex; align-items: center; gap: 16px;
+  padding: 18px 20px; cursor: pointer;
+  background: linear-gradient(90deg, rgba(201,168,76,0.07), transparent);
+}
+.sourate-num {
+  width: 40px; height: 40px; border-radius: 50%;
+  border: 1px solid var(--gold); color: var(--gold);
+  font-family: 'Amiri', serif; font-size: 1.1rem;
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0;
+}
+.sourate-meta { flex: 1; }
+.sourate-name-ar {
+  font-family: 'Amiri', serif; font-size: 1.5rem;
+  color: var(--gold); direction: rtl; display: block;
+}
+.sourate-name-fr { font-size: 0.78rem; color: rgba(253,246,227,0.5); margin-top: 2px; text-transform: uppercase; letter-spacing: 0.08em; }
+.sourate-info { font-size: 0.72rem; color: rgba(253,246,227,0.3); margin-top: 2px; }
+.sourate-toggle { color: rgba(253,246,227,0.3); font-size: 1.1rem; transition: transform 0.3s; }
+.sourate-card.open .sourate-toggle { transform: rotate(180deg); }
+
+.sourate-body { display: none; padding: 0 20px 20px; }
+.sourate-card.open .sourate-body { display: block; }
+
+/* Verses */
+.verse-block { margin-bottom: 22px; padding-bottom: 20px; border-bottom: 1px solid var(--border); }
+.verse-block:last-child { border-bottom: none; margin-bottom: 0; padding-bottom: 0; }
+
+.verse-ar {
+  font-family: 'Amiri', serif; font-size: 1.7rem;
+  color: var(--cream); direction: rtl; line-height: 1.9;
+  text-align: right; margin-bottom: 8px;
+  background: rgba(201,168,76,0.04); border-right: 3px solid var(--gold);
+  padding: 10px 14px; border-radius: 4px;
+}
+.verse-ar .vnum {
+  font-size: 0.85rem; color: var(--gold);
+  vertical-align: middle; margin-left: 6px;
+}
+.verse-tr { font-size: 0.78rem; color: rgba(201,168,76,0.6); font-style: italic; margin-bottom: 4px; }
+.verse-fr { font-size: 0.92rem; color: rgba(253,246,227,0.75); line-height: 1.6; margin-bottom: 12px; }
+
+/* Word breakdown */
+.word-breakdown {
+  display: flex; flex-wrap: wrap; gap: 8px; direction: rtl;
+}
+.word-chip {
+  background: rgba(201,168,76,0.08); border: 1px solid rgba(201,168,76,0.2);
+  border-radius: 5px; padding: 6px 10px; cursor: pointer;
+  transition: all 0.18s; position: relative;
+}
+.word-chip:hover { background: rgba(201,168,76,0.18); border-color: var(--gold); }
+.word-chip .w-ar { font-family: 'Amiri', serif; font-size: 1.1rem; color: var(--gold); display: block; }
+.word-chip .w-fr { font-size: 0.68rem; color: rgba(253,246,227,0.5); display: block; margin-top: 2px; direction: ltr; }
+
+.breakdown-lbl {
+  font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.12em;
+  color: rgba(253,246,227,0.3); margin-bottom: 8px; direction: ltr;
+}
+
+/* Vocab coran grid */
+.vocab-coran { display: grid; grid-template-columns: repeat(auto-fill, minmax(155px, 1fr)); gap: 10px; margin-top: 14px; }
+.vc-card {
+  background: rgba(26,74,58,0.15); border: 1px solid rgba(26,74,58,0.4);
+  border-radius: 6px; padding: 12px 10px; text-align: center;
+}
+.vc-ar { font-family: 'Amiri', serif; font-size: 1.5rem; color: #7dd874; direction: rtl; display: block; margin-bottom: 5px; }
+.vc-fr { font-size: 0.78rem; color: rgba(253,246,227,0.6); }
+.vc-root { font-size: 0.68rem; color: rgba(125,216,116,0.5); margin-top: 2px; font-style: italic; }
+
+/* Tajweed legend */
+.tj-legend { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 16px; }
+.tj-item { display: flex; align-items: center; gap: 5px; font-size: 0.75rem; color: rgba(253,246,227,0.5); }
+.tj-dot { width: 10px; height: 10px; border-radius: 50%; flex-shrink: 0; }
+
+/* Progress bar for sourates */
+.progress-bar { background: var(--border); border-radius: 10px; height: 4px; margin-top: 6px; overflow: hidden; }
+.progress-fill { height: 100%; background: linear-gradient(90deg, var(--gold), var(--gold2)); border-radius: 10px; transition: width 0.5s ease; }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header>
+  <div class="hdr-ar">أَوَّلُ كَلِمَاتِي — فَهْمُ الْقُرْآن</div>
+  <div class="hdr-fr">Mes Premiers Mots en Arabe · Comprendre le Coran</div>
+</header>
+
+<nav class="nav">
+  <button class="nav-btn active" onclick="showSec('fiches',this)">📚 Fiches vocab</button>
+  <button class="nav-btn" onclick="showSec('flashcards',this)">🃏 Flashcards</button>
+  <button class="nav-btn" onclick="showSec('quiz',this)">🎯 Quiz</button>
+  <button class="nav-btn" onclick="showSec('coran',this)">📖 Comprendre le Coran</button>
+</nav>
+
+<!-- ══ FICHES ══ -->
+<div id="fiches" class="section active">
+  <div class="cats" id="fiche-cats"></div>
+  <div id="fiche-content"></div>
+</div>
+
+<!-- ══ FLASHCARDS ══ -->
+<div id="flashcards" class="section">
+  <div class="sec-title">Flashcards</div>
+  <div class="cats" id="flash-cats"></div>
+  <div class="tip">💡 <strong>Méthode :</strong> Regardez le mot arabe, essayez de le traduire mentalement, puis retournez la carte. Répétez jusqu'à maîtriser toute la série.</div>
+  <div class="fc-wrap" onclick="flipCard()">
+    <div class="flashcard" id="flashcard">
+      <div class="fc-face fc-front">
+        <div class="fc-lbl">Mot arabe — traduisez</div>
+        <div class="fc-ar" id="fc-arabic"></div>
+        <div class="fc-hint">cliquez pour retourner</div>
+      </div>
+      <div class="fc-face fc-back">
+        <div class="fc-lbl">Traduction française</div>
+        <div class="fc-fr" id="fc-french"></div>
+        <div class="fc-hint" id="fc-tr" style="color:rgba(201,168,76,0.5)"></div>
+      </div>
+    </div>
+  </div>
+  <div class="fc-nav">
+    <button class="btn-ol" onclick="prevCard()">← Précédent</button>
+    <div class="fc-cnt" id="fc-counter">1 / 1</div>
+    <button class="btn-ol" onclick="nextCard()">Suivant →</button>
+  </div>
+</div>
+
+<!-- ══ QUIZ ══ -->
+<div id="quiz" class="section">
+  <div class="sec-title">Quiz — Trouvez la traduction</div>
+  <div class="cats" id="quiz-cats"></div>
+  <div class="quiz-box">
+    <div class="q-score">Score : <span class="q-num" id="q-score">0</span> / <span id="q-total">0</span></div>
+    <div class="q-word" id="q-word"></div>
+    <div class="q-hint">Que signifie ce mot arabe ?</div>
+    <div class="q-opts" id="q-opts"></div>
+    <div class="q-fb" id="q-fb"></div>
+    <button class="btn" id="q-next" onclick="nextQuestion()" style="display:none">Question suivante →</button>
+  </div>
+</div>
+
+<!-- ══ CORAN ══ -->
+<div id="coran" class="section">
+  <div class="sec-title">📖 Comprendre le Coran — Sourates pour débutants</div>
+
+  <div class="tip">
+    💡 <strong>Comment utiliser cette section :</strong> Chaque sourate est découpée verset par verset. La translittération vous aide à prononcer. Cliquez sur chaque <strong>mot arabe</strong> pour voir sa signification. Commencez par Al-Fatiha — c'est la sourate récitée à chaque prière.
+  </div>
+
+  <div class="sourate-list" id="sourate-list"></div>
+</div>
+
+</div><!-- /wrap -->
+
+<script>
+/* ══════════════════════════════════════════
+   VOCABULAIRE DATA (vocab de base)
+══════════════════════════════════════════ */
+const VOCAB = {
+  couleurs: { label:"🎨 Couleurs", items:[
+    {ar:"أَزْرَق",fr:"Bleu",tr:"azraq"},{ar:"أَحْمَر",fr:"Rouge",tr:"ahmar"},
+    {ar:"أَخْضَر",fr:"Vert",tr:"akhdar"},{ar:"أَصْفَر",fr:"Jaune",tr:"asfar"},
+    {ar:"بُرْتُقَالِي",fr:"Orange",tr:"burtuqāli"},{ar:"بُنِّي",fr:"Marron",tr:"bunni"},
+    {ar:"بَنَفْسَجِي",fr:"Violet",tr:"banafsaji"},{ar:"وَرْدِي",fr:"Rose",tr:"wardi"},
+    {ar:"أَسْوَد",fr:"Noir",tr:"aswad"},{ar:"رَمَادِي",fr:"Gris",tr:"ramādi"},
+    {ar:"أَبْيَض",fr:"Blanc",tr:"abyad"},
+  ]},
+  nombres: { label:"🔢 Nombres 1-10", items:[
+    {ar:"وَاحِد",fr:"1 — Un",tr:"wāhid"},{ar:"اِثْنَان",fr:"2 — Deux",tr:"ithnān"},
+    {ar:"ثَلَاثَة",fr:"3 — Trois",tr:"thalātha"},{ar:"أَرْبَعَة",fr:"4 — Quatre",tr:"arba'a"},
+    {ar:"خَمْسَة",fr:"5 — Cinq",tr:"khamsa"},{ar:"سِتَّة",fr:"6 — Six",tr:"sitta"},
+    {ar:"سَبْعَة",fr:"7 — Sept",tr:"sab'a"},{ar:"ثَمَانِيَة",fr:"8 — Huit",tr:"thamāniya"},
+    {ar:"تِسْعَة",fr:"9 — Neuf",tr:"tis'a"},{ar:"عَشَرَة",fr:"10 — Dix",tr:"'ashara"},
+  ]},
+  pronoms: { label:"👤 Pronoms", items:[
+    {ar:"أَنَا",fr:"Je",tr:"ana"},{ar:"نَحْنُ",fr:"Nous",tr:"nahnu"},
+    {ar:"أَنْتَ",fr:"Tu (masc.)",tr:"anta"},{ar:"أَنْتِ",fr:"Tu (fém.)",tr:"anti"},
+    {ar:"هُوَ",fr:"Il",tr:"huwa"},{ar:"هِيَ",fr:"Elle",tr:"hiya"},
+    {ar:"هُمْ",fr:"Ils",tr:"hum"},{ar:"هُنَّ",fr:"Elles",tr:"hunna"},
+  ]},
+  jours: { label:"📅 Jours", items:[
+    {ar:"الِاثْنَيْن",fr:"Lundi",tr:"al-ithnayn"},{ar:"الثُّلَاثَاء",fr:"Mardi",tr:"ath-thulāthā'"},
+    {ar:"الْأَرْبِعَاء",fr:"Mercredi",tr:"al-arbi'ā'"},{ar:"الْخَمِيس",fr:"Jeudi",tr:"al-khamīs"},
+    {ar:"الْجُمُعَة",fr:"Vendredi",tr:"al-jumu'a"},{ar:"السَّبْت",fr:"Samedi",tr:"as-sabt"},
+    {ar:"الْأَحَد",fr:"Dimanche",tr:"al-ahad"},
+  ]},
+  questions: { label:"❓ Questions", items:[
+    {ar:"مَنْ",fr:"Qui ?",tr:"man"},{ar:"مَاذَا",fr:"Quoi ?",tr:"mādhā"},
+    {ar:"أَيْنَ",fr:"Où ?",tr:"ayna"},{ar:"مَتَى",fr:"Quand ?",tr:"matā"},
+    {ar:"كَيْفَ",fr:"Comment ?",tr:"kayfa"},{ar:"لِمَاذَا",fr:"Pourquoi ?",tr:"limādhā"},
+    {ar:"كَمْ",fr:"Combien ?",tr:"kam"},{ar:"هَلْ",fr:"Est-ce que ?",tr:"hal"},
+  ]},
+  salutations: { label:"👋 Salutations", items:[
+    {ar:"السَّلَامُ عَلَيْكُمْ",fr:"Salam Aleykoum",tr:"as-salāmu 'alaykum"},
+    {ar:"مَرْحَبًا",fr:"Bienvenue",tr:"marhaban"},
+    {ar:"أَهْلًا وَسَهْلًا",fr:"Bienvenue (chaleureux)",tr:"ahlan wa sahlan"},
+    {ar:"صَبَاحُ النُّور",fr:"Bonjour",tr:"sabāh an-nūr"},
+    {ar:"مَسَاءُ النُّور",fr:"Bonsoir",tr:"masā' an-nūr"},
+    {ar:"إِلَى اللِّقَاء",fr:"Au revoir",tr:"ilā al-liqā'"},
+    {ar:"مَعَ السَّلَامَة",fr:"Au revoir (avec paix)",tr:"ma'a as-salāma"},
+  ]},
+  politesse: { label:"🙏 Politesse", items:[
+    {ar:"شُكْرًا",fr:"Merci",tr:"shukran"},{ar:"عَفْوًا",fr:"De rien / Pardon",tr:"'afwan"},
+    {ar:"آسِف",fr:"Désolé",tr:"āsif"},{ar:"تَفَضَّلْ",fr:"Je t'en prie",tr:"tafaddal"},
+    {ar:"مِنْ فَضْلِكَ",fr:"S'il te plaît",tr:"min fadlik"},
+  ]},
+  coran_vocab: { label:"📖 Vocab Coranique", items:[
+    {ar:"اللَّه",fr:"Allah (Dieu)",tr:"allāh"},{ar:"رَبّ",fr:"Seigneur",tr:"rabb"},
+    {ar:"رَحْمَن",fr:"Le Tout Miséricordieux",tr:"rahmān"},{ar:"رَحِيم",fr:"Le Très Miséricordieux",tr:"rahīm"},
+    {ar:"مَلِك",fr:"Roi / Maître",tr:"malik"},{ar:"عِبَادَة",fr:"Adoration / Culte",tr:"'ibāda"},
+    {ar:"صِرَاط",fr:"Chemin / Voie",tr:"sirāt"},{ar:"نِعْمَة",fr:"Bienfait",tr:"ni'ma"},
+    {ar:"كِتَاب",fr:"Livre",tr:"kitāb"},{ar:"إِيمَان",fr:"Foi",tr:"īmān"},
+    {ar:"صَلَاة",fr:"Prière",tr:"salāh"},{ar:"دُعَاء",fr:"Invocation",tr:"du'ā'"},
+    {ar:"جَنَّة",fr:"Paradis",tr:"janna"},{ar:"نَار",fr:"Feu / Enfer",tr:"nār"},
+    {ar:"خَيْر",fr:"Bien",tr:"khayr"},{ar:"شَرّ",fr:"Mal",tr:"sharr"},
+  ]},
+};
+
+/* ══════════════════════════════════════════
+   SOURATES DATA
+══════════════════════════════════════════ */
+const SOURATES = [
+  {
+    num: 1, nameAr: "الْفَاتِحَة", nameFr: "L'Ouverture (Al-Fatiha)",
+    info: "7 versets · Mecquoise · Récitée à chaque unité de prière",
+    intro: "Al-Fatiha est la première sourate du Coran et la plus fondamentale. Elle résume toute la relation entre l'homme et son Créateur : louange, reconnaissance, et demande de guidance.",
+    verses: [
+      {
+        num: 1, ar: "بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ",
+        tr: "Bismi llāhi r-rahmāni r-rahīm",
+        fr: "Au nom d'Allah, le Tout Miséricordieux, le Très Miséricordieux",
+        words: [
+          {ar:"بِسْمِ",fr:"Au nom de"},{ar:"اللَّهِ",fr:"Allah"},{ar:"الرَّحْمَٰنِ",fr:"le Tout Miséricordieux"},{ar:"الرَّحِيمِ",fr:"le Très Miséricordieux"}
+        ]
+      },
+      {
+        num: 2, ar: "الْحَمْدُ لِلَّهِ رَبِّ الْعَالَمِينَ",
+        tr: "Al-hamdu li-llāhi rabbi l-'ālamīn",
+        fr: "Louange à Allah, Seigneur des mondes",
+        words: [
+          {ar:"الْحَمْدُ",fr:"La louange"},{ar:"لِلَّهِ",fr:"à Allah"},{ar:"رَبِّ",fr:"Seigneur"},{ar:"الْعَالَمِينَ",fr:"des mondes"}
+        ]
+      },
+      {
+        num: 3, ar: "الرَّحْمَٰنِ الرَّحِيمِ",
+        tr: "Ar-rahmāni r-rahīm",
+        fr: "Le Tout Miséricordieux, le Très Miséricordieux",
+        words: [
+          {ar:"الرَّحْمَٰنِ",fr:"Le Tout Miséricordieux"},{ar:"الرَّحِيمِ",fr:"le Très Miséricordieux"}
+        ]
+      },
+      {
+        num: 4, ar: "مَالِكِ يَوْمِ الدِّينِ",
+        tr: "Māliki yawmi d-dīn",
+        fr: "Maître du Jour de la rétribution",
+        words: [
+          {ar:"مَالِكِ",fr:"Maître / Roi"},{ar:"يَوْمِ",fr:"du Jour"},{ar:"الدِّينِ",fr:"de la rétribution / jugement"}
+        ]
+      },
+      {
+        num: 5, ar: "إِيَّاكَ نَعْبُدُ وَإِيَّاكَ نَسْتَعِينُ",
+        tr: "Iyyāka na'budu wa iyyāka nasta'īn",
+        fr: "C'est Toi [seul] que nous adorons, et c'est Toi [seul] dont nous implorons le secours",
+        words: [
+          {ar:"إِيَّاكَ",fr:"Toi seul"},{ar:"نَعْبُدُ",fr:"nous adorons"},{ar:"وَإِيَّاكَ",fr:"et Toi seul"},{ar:"نَسْتَعِينُ",fr:"nous implorons le secours"}
+        ]
+      },
+      {
+        num: 6, ar: "اهْدِنَا الصِّرَاطَ الْمُسْتَقِيمَ",
+        tr: "Ihdinā s-sirāta l-mustaqīm",
+        fr: "Guide-nous dans le droit chemin",
+        words: [
+          {ar:"اهْدِنَا",fr:"Guide-nous"},{ar:"الصِّرَاطَ",fr:"le chemin"},{ar:"الْمُسْتَقِيمَ",fr:"droit / direct"}
+        ]
+      },
+      {
+        num: 7, ar: "صِرَاطَ الَّذِينَ أَنْعَمْتَ عَلَيْهِمْ غَيْرِ الْمَغْضُوبِ عَلَيْهِمْ وَلَا الضَّالِّينَ",
+        tr: "Sirāta l-ladhīna an'amta 'alayhim ghayri l-maghdūbi 'alayhim wa lā d-dāllīn",
+        fr: "Le chemin de ceux que Tu as comblés de bienfaits, non pas de ceux qui ont encouru Ta colère, ni des égarés",
+        words: [
+          {ar:"الَّذِينَ",fr:"ceux qui"},{ar:"أَنْعَمْتَ",fr:"Tu as comblé de bienfaits"},{ar:"عَلَيْهِمْ",fr:"sur eux"},{ar:"غَيْرِ",fr:"non pas"},{ar:"الْمَغْضُوبِ",fr:"de ceux qui ont encouru la colère"},{ar:"الضَّالِّينَ",fr:"les égarés"}
+        ]
+      },
+    ],
+    keyVocab:[
+      {ar:"حَمْد",fr:"Louange",root:"ح م د"},{ar:"رَبّ",fr:"Seigneur",root:"ر ب ب"},
+      {ar:"عَالَم",fr:"Monde",root:"ع ل م"},{ar:"مَلِك",fr:"Maître",root:"م ل ك"},
+      {ar:"يَوْم",fr:"Jour",root:"ي و م"},{ar:"عِبَادَة",fr:"Adoration",root:"ع ب د"},
+      {ar:"هِدَايَة",fr:"Guidance",root:"هـ د ي"},{ar:"صِرَاط",fr:"Chemin",root:"ص ر ط"},
+    ]
+  },
+  {
+    num: 112, nameAr: "الْإِخْلَاص", nameFr: "La Pureté / Le Monothéisme (Al-Ikhlas)",
+    info: "4 versets · Mecquoise · Vaut un tiers du Coran selon un hadith",
+    intro: "Al-Ikhlas est une sourate courte mais d'une profondeur extraordinaire. Elle résume le concept fondamental de l'islam : le monothéisme pur (tawhid). Elle affirme que Dieu est Un, absolu, sans associés.",
+    verses: [
+      {
+        num: 1, ar: "قُلْ هُوَ اللَّهُ أَحَدٌ",
+        tr: "Qul huwa llāhu ahad",
+        fr: "Dis : « Il est Allah, [l']Unique »",
+        words: [
+          {ar:"قُلْ",fr:"Dis"},{ar:"هُوَ",fr:"Il est"},{ar:"اللَّهُ",fr:"Allah"},{ar:"أَحَدٌ",fr:"Unique / Un"}
+        ]
+      },
+      {
+        num: 2, ar: "اللَّهُ الصَّمَدُ",
+        tr: "Allāhu s-samad",
+        fr: "Allah, l'Absolument Parfait (dont tout le monde dépend)",
+        words: [
+          {ar:"اللَّهُ",fr:"Allah"},{ar:"الصَّمَدُ",fr:"le Parfait / l'Impénétrable (dont tout dépend)"}
+        ]
+      },
+      {
+        num: 3, ar: "لَمْ يَلِدْ وَلَمْ يُولَدْ",
+        tr: "Lam yalid wa lam yūlad",
+        fr: "Il n'a pas engendré, et Il n'a pas été engendré",
+        words: [
+          {ar:"لَمْ",fr:"Il n'a pas (nég.)"},{ar:"يَلِدْ",fr:"engendré"},{ar:"وَلَمْ",fr:"et pas"},{ar:"يُولَدْ",fr:"été engendré"}
+        ]
+      },
+      {
+        num: 4, ar: "وَلَمْ يَكُنْ لَهُ كُفُوًا أَحَدٌ",
+        tr: "Wa lam yakun lahu kufuwan ahad",
+        fr: "Et nul n'est égal à Lui",
+        words: [
+          {ar:"وَلَمْ",fr:"et ne"},{ar:"يَكُنْ",fr:"il n'est pas"},{ar:"لَهُ",fr:"pour Lui"},{ar:"كُفُوًا",fr:"égal"},{ar:"أَحَدٌ",fr:"quelqu'un / personne"}
+        ]
+      },
+    ],
+    keyVocab:[
+      {ar:"أَحَد",fr:"Un / Unique",root:"أ ح د"},{ar:"صَمَد",fr:"Absolu / Parfait",root:"ص م د"},
+      {ar:"وَلَد",fr:"Enfanter",root:"و ل د"},{ar:"كُفُو",fr:"Égal",root:"ك ف أ"},
+    ]
+  },
+  {
+    num: 113, nameAr: "الْفَلَق", nameFr: "L'Aube naissante (Al-Falaq)",
+    info: "5 versets · Mecquoise · Sourate de protection",
+    intro: "Al-Falaq est une des deux sourates de protection (al-mu'awwidhatayn). Elle enseigne à chercher refuge auprès d'Allah contre tout mal extérieur : le mal de la nuit, des sorciers et des envieux.",
+    verses: [
+      {
+        num: 1, ar: "قُلْ أَعُوذُ بِرَبِّ الْفَلَقِ",
+        tr: "Qul a'ūdhu bi-rabbi l-falaq",
+        fr: "Dis : « Je cherche refuge auprès du Seigneur de l'Aube naissante »",
+        words: [
+          {ar:"قُلْ",fr:"Dis"},{ar:"أَعُوذُ",fr:"je cherche refuge"},{ar:"بِرَبِّ",fr:"auprès du Seigneur"},{ar:"الْفَلَقِ",fr:"de l'aube / du lever du jour"}
+        ]
+      },
+      {
+        num: 2, ar: "مِنْ شَرِّ مَا خَلَقَ",
+        tr: "Min sharri mā khalaq",
+        fr: "Contre le mal de ce qu'Il a créé",
+        words: [
+          {ar:"مِنْ",fr:"contre / de"},{ar:"شَرِّ",fr:"le mal"},{ar:"مَا",fr:"ce que"},{ar:"خَلَقَ",fr:"Il a créé"}
+        ]
+      },
+      {
+        num: 3, ar: "وَمِنْ شَرِّ غَاسِقٍ إِذَا وَقَبَ",
+        tr: "Wa min sharri ghāsiqin idhā waqab",
+        fr: "Et contre le mal de l'obscurité quand elle s'étend",
+        words: [
+          {ar:"وَمِنْ",fr:"et contre"},{ar:"شَرِّ",fr:"le mal"},{ar:"غَاسِقٍ",fr:"de l'obscurité / la nuit"},{ar:"إِذَا",fr:"quand"},{ar:"وَقَبَ",fr:"elle s'étend / s'installe"}
+        ]
+      },
+      {
+        num: 4, ar: "وَمِنْ شَرِّ النَّفَّاثَاتِ فِي الْعُقَدِ",
+        tr: "Wa min sharri n-naffāthāti fī l-'uqad",
+        fr: "Et contre le mal des souffleuses de nœuds (sorcières)",
+        words: [
+          {ar:"النَّفَّاثَاتِ",fr:"celles qui soufflent"},{ar:"فِي",fr:"dans / sur"},{ar:"الْعُقَدِ",fr:"les nœuds"}
+        ]
+      },
+      {
+        num: 5, ar: "وَمِنْ شَرِّ حَاسِدٍ إِذَا حَسَدَ",
+        tr: "Wa min sharri hāsidin idhā hasad",
+        fr: "Et contre le mal de l'envieux quand il envie",
+        words: [
+          {ar:"حَاسِدٍ",fr:"l'envieux"},{ar:"إِذَا",fr:"quand"},{ar:"حَسَدَ",fr:"il envie"}
+        ]
+      },
+    ],
+    keyVocab:[
+      {ar:"عَوْذ",fr:"Refuge / Protection",root:"ع و ذ"},{ar:"شَرّ",fr:"Mal",root:"ش ر ر"},
+      {ar:"خَلَق",fr:"Créer",root:"خ ل ق"},{ar:"حَسَد",fr:"Envier / Envie",root:"ح س د"},
+      {ar:"فَلَق",fr:"Aube / Aurore",root:"ف ل ق"},
+    ]
+  },
+  {
+    num: 114, nameAr: "النَّاس", nameFr: "Les Hommes (An-Nas)",
+    info: "6 versets · Mecquoise · Dernière sourate du Coran",
+    intro: "An-Nas, la dernière sourate du Coran, est la seconde des deux sourates de protection. Elle enseigne à chercher refuge contre le mal intérieur : les chuchotements du diable dans les cœurs des hommes.",
+    verses: [
+      {
+        num: 1, ar: "قُلْ أَعُوذُ بِرَبِّ النَّاسِ",
+        tr: "Qul a'ūdhu bi-rabbi n-nās",
+        fr: "Dis : « Je cherche refuge auprès du Seigneur des hommes »",
+        words: [
+          {ar:"قُلْ",fr:"Dis"},{ar:"أَعُوذُ",fr:"je cherche refuge"},{ar:"بِرَبِّ",fr:"auprès du Seigneur"},{ar:"النَّاسِ",fr:"des hommes / des gens"}
+        ]
+      },
+      {
+        num: 2, ar: "مَلِكِ النَّاسِ",
+        tr: "Maliki n-nās",
+        fr: "Roi des hommes",
+        words: [
+          {ar:"مَلِكِ",fr:"Roi / Maître"},{ar:"النَّاسِ",fr:"des hommes"}
+        ]
+      },
+      {
+        num: 3, ar: "إِلَٰهِ النَّاسِ",
+        tr: "Ilāhi n-nās",
+        fr: "Dieu des hommes",
+        words: [
+          {ar:"إِلَٰهِ",fr:"Dieu / Divinité"},{ar:"النَّاسِ",fr:"des hommes"}
+        ]
+      },
+      {
+        num: 4, ar: "مِنْ شَرِّ الْوَسْوَاسِ الْخَنَّاسِ",
+        tr: "Min sharri l-waswāsi l-khannās",
+        fr: "Contre le mal du chuchoteur furtif",
+        words: [
+          {ar:"مِنْ",fr:"contre"},{ar:"شَرِّ",fr:"le mal"},{ar:"الْوَسْوَاسِ",fr:"du chuchoteur / celui qui instille le doute"},{ar:"الْخَنَّاسِ",fr:"le furtif / celui qui se retire"}
+        ]
+      },
+      {
+        num: 5, ar: "الَّذِي يُوَسْوِسُ فِي صُدُورِ النَّاسِ",
+        tr: "Alladhī yuwaswisu fī sudūri n-nās",
+        fr: "Qui souffle le mal dans les cœurs des hommes",
+        words: [
+          {ar:"الَّذِي",fr:"celui qui"},{ar:"يُوَسْوِسُ",fr:"chuchote / insuffle"},{ar:"فِي",fr:"dans"},{ar:"صُدُورِ",fr:"les poitrines / cœurs"},{ar:"النَّاسِ",fr:"des hommes"}
+        ]
+      },
+      {
+        num: 6, ar: "مِنَ الْجِنَّةِ وَالنَّاسِ",
+        tr: "Mina l-jinnati wa n-nās",
+        fr: "Qu'il soit parmi les djinns ou parmi les hommes",
+        words: [
+          {ar:"مِنَ",fr:"parmi"},{ar:"الْجِنَّةِ",fr:"les djinns"},{ar:"وَالنَّاسِ",fr:"et les hommes"}
+        ]
+      },
+    ],
+    keyVocab:[
+      {ar:"نَاس",fr:"Gens / Hommes",root:"ن و س"},{ar:"مَلِك",fr:"Roi",root:"م ل ك"},
+      {ar:"إِلَه",fr:"Dieu",root:"أ ل هـ"},{ar:"وَسْوَاس",fr:"Chuchotement",root:"و س و س"},
+      {ar:"صَدْر",fr:"Poitrine / Cœur",root:"ص د ر"},
+    ]
+  },
+  {
+    num: 108, nameAr: "الْكَوْثَر", nameFr: "L'Abondance (Al-Kawthar)",
+    info: "3 versets · Mecquoise · Sourate la plus courte du Coran",
+    intro: "Al-Kawthar est la sourate la plus courte du Coran. Allah y annonce au Prophète ﷺ qu'Il lui a accordé une grâce immense (al-Kawthar, un fleuve au Paradis), et lui ordonne de prier et de sacrifier en signe de gratitude.",
+    verses: [
+      {
+        num: 1, ar: "إِنَّا أَعْطَيْنَاكَ الْكَوْثَرَ",
+        tr: "Innā a'taynāka l-kawthar",
+        fr: "Nous t'avons accordé l'Abondance (Al-Kawthar)",
+        words: [
+          {ar:"إِنَّا",fr:"Nous, en vérité"},{ar:"أَعْطَيْنَاكَ",fr:"Nous t'avons accordé"},{ar:"الْكَوْثَرَ",fr:"l'Abondance (fleuve du Paradis)"}
+        ]
+      },
+      {
+        num: 2, ar: "فَصَلِّ لِرَبِّكَ وَانْحَرْ",
+        tr: "Fasalli li-rabbika wa nhar",
+        fr: "Prie donc ton Seigneur et sacrifie",
+        words: [
+          {ar:"فَصَلِّ",fr:"Prie donc"},{ar:"لِرَبِّكَ",fr:"pour ton Seigneur"},{ar:"وَانْحَرْ",fr:"et sacrifie (un animal)"}
+        ]
+      },
+      {
+        num: 3, ar: "إِنَّ شَانِئَكَ هُوَ الْأَبْتَرُ",
+        tr: "Inna shāni'aka huwa l-abtar",
+        fr: "C'est bien ton ennemi qui sera sans postérité",
+        words: [
+          {ar:"إِنَّ",fr:"Certes"},{ar:"شَانِئَكَ",fr:"celui qui te hait"},{ar:"هُوَ",fr:"c'est lui"},{ar:"الْأَبْتَرُ",fr:"celui sans postérité / coupé"}
+        ]
+      },
+    ],
+    keyVocab:[
+      {ar:"أَعْطَى",fr:"Donner / Accorder",root:"ع ط ي"},{ar:"صَلَاة",fr:"Prière",root:"ص ل و"},
+      {ar:"رَبّ",fr:"Seigneur",root:"ر ب ب"},{ar:"كَوْثَر",fr:"Abondance",root:"ك ث ر"},
+    ]
+  },
+];
+
+/* ══════════════════════════════════════════
+   FICHES
+══════════════════════════════════════════ */
+let currentVocabCat = 'couleurs';
+
+function buildCatPills(containerId, activeCat, onClickFn, data) {
+  const el = document.getElementById(containerId);
+  el.innerHTML = '';
+  Object.entries(data).forEach(([key, val]) => {
+    const btn = document.createElement('button');
+    btn.className = 'cat-pill' + (key === activeCat ? ' active' : '');
+    btn.textContent = val.label;
+    btn.onclick = () => {
+      el.querySelectorAll('.cat-pill').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      onClickFn(key);
+    };
+    el.appendChild(btn);
+  });
+}
+
+function renderFiches(cat) {
+  currentVocabCat = cat;
+  const items = VOCAB[cat].items;
+  document.getElementById('fiche-content').innerHTML =
+    `<div class="sec-title">${VOCAB[cat].label}</div>
+     <div class="vocab-grid">${items.map(i =>
+      `<div class="v-card">
+        <span class="v-ar">${i.ar}</span>
+        <div class="v-fr">${i.fr}</div>
+        <div class="v-tr">${i.tr}</div>
+       </div>`).join('')}
+     </div>`;
+}
+
+buildCatPills('fiche-cats', 'couleurs', renderFiches, VOCAB);
+renderFiches('couleurs');
+
+/* ══════════════════════════════════════════
+   FLASHCARDS
+══════════════════════════════════════════ */
+let fcItems = [], fcIdx = 0, fcFlipped = false;
+
+function initFlash(cat) {
+  fcItems = [...VOCAB[cat].items].sort(() => Math.random() - 0.5);
+  fcIdx = 0; fcFlipped = false;
+  showCard();
+}
+
+function showCard() {
+  const card = document.getElementById('flashcard');
+  card.classList.remove('flipped'); fcFlipped = false;
+  const item = fcItems[fcIdx];
+  document.getElementById('fc-arabic').textContent = item.ar;
+  document.getElementById('fc-french').textContent = item.fr;
+  document.getElementById('fc-tr').textContent = item.tr;
+  document.getElementById('fc-counter').textContent = `${fcIdx+1} / ${fcItems.length}`;
+}
+
+function flipCard() { fcFlipped=!fcFlipped; document.getElementById('flashcard').classList.toggle('flipped',fcFlipped); }
+function nextCard() { fcIdx=(fcIdx+1)%fcItems.length; showCard(); }
+function prevCard() { fcIdx=(fcIdx-1+fcItems.length)%fcItems.length; showCard(); }
+
+buildCatPills('flash-cats', 'couleurs', initFlash, VOCAB);
+initFlash('couleurs');
+
+/* ══════════════════════════════════════════
+   QUIZ
+══════════════════════════════════════════ */
+let quizCat='couleurs', qItems=[], qScore=0, qTotal=0, qAnswered=false, qCurrent=null;
+
+function initQuiz(cat) {
+  quizCat=cat; qScore=0; qTotal=0;
+  qItems=[...VOCAB[cat].items].sort(()=>Math.random()-0.5);
+  document.getElementById('q-score').textContent=0;
+  document.getElementById('q-total').textContent=0;
+  document.getElementById('q-fb').textContent='';
+  nextQuestion();
+}
+
+function nextQuestion() {
+  if(!qItems.length) qItems=[...VOCAB[quizCat].items].sort(()=>Math.random()-0.5);
+  qCurrent=qItems.pop(); qAnswered=false;
+  document.getElementById('q-word').textContent=qCurrent.ar;
+  document.getElementById('q-fb').textContent=''; document.getElementById('q-fb').className='q-fb';
+  document.getElementById('q-next').style.display='none';
+  const all=VOCAB[quizCat].items;
+  let opts=[qCurrent,...all.filter(x=>x.ar!==qCurrent.ar).sort(()=>Math.random()-0.5).slice(0,3)].sort(()=>Math.random()-0.5);
+  document.getElementById('q-opts').innerHTML=opts.map(o=>
+    `<button class="q-opt" onclick="answerQ(this,'${o.fr.replace(/'/g,"\\'")}','${qCurrent.fr.replace(/'/g,"\\'")}')">${o.fr}</button>`
+  ).join('');
+}
+
+function answerQ(btn, chosen, correct) {
+  if(qAnswered) return; qAnswered=true; qTotal++;
+  document.getElementById('q-total').textContent=qTotal;
+  document.querySelectorAll('.q-opt').forEach(b=>{ b.disabled=true; if(b.textContent===correct) b.classList.add('correct'); });
+  const fb=document.getElementById('q-fb');
+  if(chosen===correct) { qScore++; btn.classList.add('correct'); fb.textContent='✓ Excellent !'; fb.className='q-fb ok'; }
+  else { btn.classList.add('wrong'); fb.textContent=`✗ C'était : ${correct}`; fb.className='q-fb err'; }
+  document.getElementById('q-score').textContent=qScore;
+  document.getElementById('q-next').style.display='inline-block';
+}
+
+buildCatPills('quiz-cats','couleurs',initQuiz,VOCAB);
+initQuiz('couleurs');
+
+/* ══════════════════════════════════════════
+   CORAN
+══════════════════════════════════════════ */
+function renderCoran() {
+  const list = document.getElementById('sourate-list');
+  list.innerHTML = SOURATES.map((s,si) => `
+    <div class="sourate-card" id="sc-${si}">
+      <div class="sourate-header" onclick="toggleSourate(${si})">
+        <div class="sourate-num">${s.num}</div>
+        <div class="sourate-meta">
+          <span class="sourate-name-ar">${s.nameAr}</span>
+          <div class="sourate-name-fr">${s.nameFr}</div>
+          <div class="sourate-info">${s.info}</div>
+        </div>
+        <div class="sourate-toggle">▼</div>
+      </div>
+      <div class="sourate-body">
+        <div class="tip" style="margin-bottom:16px;font-size:0.8rem">${s.intro}</div>
+
+        ${s.verses.map(v => `
+          <div class="verse-block">
+            <div class="verse-ar">${v.ar} <span class="vnum">﴿${v.num}﴾</span></div>
+            <div class="verse-tr">${v.tr}</div>
+            <div class="verse-fr">${v.fr}</div>
+            <div class="breakdown-lbl">Mot par mot — cliquez sur un mot</div>
+            <div class="word-breakdown">
+              ${v.words.map(w=>`
+                <div class="word-chip" title="${w.fr}">
+                  <span class="w-ar">${w.ar}</span>
+                  <span class="w-fr">${w.fr}</span>
+                </div>`).join('')}
+            </div>
+          </div>
+        `).join('')}
+
+        <div style="margin-top:20px">
+          <div class="breakdown-lbl" style="direction:ltr;font-size:0.72rem;text-transform:uppercase;letter-spacing:0.12em;color:rgba(253,246,227,0.3);margin-bottom:10px">
+            🔑 Vocabulaire clé de cette sourate
+          </div>
+          <div class="vocab-coran">
+            ${s.keyVocab.map(v=>`
+              <div class="vc-card">
+                <span class="vc-ar">${v.ar}</span>
+                <div class="vc-fr">${v.fr}</div>
+                <div class="vc-root">Racine : ${v.root}</div>
+              </div>`).join('')}
+          </div>
+        </div>
+      </div>
+    </div>
+  `).join('');
+}
+
+function toggleSourate(idx) {
+  const card = document.getElementById('sc-'+idx);
+  card.classList.toggle('open');
+}
+
+renderCoran();
+
+/* ══════════════════════════════════════════
+   NAV
+══════════════════════════════════════════ */
+function showSec(id, btn) {
+  document.querySelectorAll('.section').forEach(s=>s.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  document.querySelectorAll('.nav-btn').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+}
+</script>
+</body>
+</html>
